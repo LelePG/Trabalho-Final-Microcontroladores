@@ -382,14 +382,19 @@
               <FilePath>.\STARTUP.A51</FilePath>
             </File>
             <File>
-              <FileName>teste.c</FileName>
+              <FileName>leticia_TF.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\teste.c</FilePath>
+              <FilePath>.\leticia_TF.c</FilePath>
             </File>
             <File>
-              <FileName>funcoes.h</FileName>
+              <FileName>libTF.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\funcoes.h</FilePath>
+              <FilePath>.\libTF.h</FilePath>
+            </File>
+            <File>
+              <FileName>i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\i2c.h</FilePath>
             </File>
           </Files>
         </Group>

@@ -1,0 +1,146 @@
+C51 COMPILER V9.60.0.0   LETICIA_TF                                                        11/07/2021 17:33:31 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE LETICIA_TF
+OBJECT MODULE PLACED IN .\Objects\leticia_TF.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE leticia_TF.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listing
+                    -s\leticia_TF.lst) TABS(2) OBJECT(.\Objects\leticia_TF.obj)
+
+line level    source
+
+   1          #include<at89x52.h>
+   2          #include <libTF.h>
+   3          #include <i2c.h>
+   4          
+   5          #define bombaAgua P0_0
+   6          #define buzzer P0_1
+   7          
+   8          //Dados relativos ao display de 7 segmentos
+   9          #define dados7seg P2
+  10          #define unidade P1_7
+  11          #define dezena P1_6
+  12          #define centena P1_5
+  13          #define milhar P1_4
+  14          
+  15          //Dados relativos ao display LCD
+  16          #define scl P1_0
+  17          #define sda P1_1
+  18          
+  19          
+  20          void ativaAgua(void);
+  21          void atualizaDisplays(int numero);
+  22          void verificaSegundo(); //Verifica se um segundo se passou
+  23          
+  24          
+  25          int valorResetaContador = 251;
+  26          
+  27          int contadorDeMiliSeg;
+  28          int segundosDisplay = 300;
+  29          
+  30          void main(){
+  31   1        EA = 1;
+  32   1        ET1 = 1;
+  33   1        EX0 = 1;
+  34   1        iniciaCont50msT1();
+  35   1      
+  36   1        while(1){ 
+  37   2            //ativaAgua();
+  38   2          //atualizaDisplays(segundosDisplay);
+  39   2          //delayT0(100);
+  40   2          
+  41   2          /* Init i2c ports first */
+  42   2        I2CInit();
+  43   2        /* Send start condition */
+  44   2        I2CStart();
+  45   2        /* Send slave address */
+  46   2      
+  47   2        /*
+  48   2         * ack == 1 => NAK
+  49   2         * ack == 0 => ACK
+  50   2         */
+  51   2         I2CSend(0x20);
+  52   2        /* Send another data */
+  53   2        
+  54   2        /* Send stop condition */
+C51 COMPILER V9.60.0.0   LETICIA_TF                                                        11/07/2021 17:33:31 PAGE 2   
+
+  55   2        
+  56   2        }
+  57   1      }
+  58          
+  59           //Rotina de ativar a água
+  60          void ativaAgua(void){
+  61   1        bombaAgua = 0;
+  62   1        //luz.setCode(1);
+  63   1        buzzer = 1845;
+  64   1        delayT0(1000);
+  65   1        bombaAgua= 1;
+  66   1        buzzer = 0;
+  67   1        delayT0(10);
+  68   1        
+  69   1        
+  70   1        //luz.setCode(6);
+  71   1      }
+  72          
+  73          
+  74          
+  75          
+  76          void atualizaDisplays(int numero){
+  77   1            //atualiza display da unidade
+  78   1            dados7seg = decodificaAlgorismo(numero%10);
+  79   1            unidade = 1;
+  80   1            delayT0(10);
+  81   1            unidade = 0;
+  82   1        
+  83   1            //atualiza display da dezena
+  84   1            dados7seg = decodificaAlgorismo(((int)(numero/10)%10));
+  85   1            dezena = 1;
+  86   1            delayT0(10);
+  87   1            dezena = 0;
+  88   1        
+  89   1            //atualiza display da centena
+  90   1            dados7seg = decodificaAlgorismo(((int)(numero/100)%10));
+  91   1            centena = 1;
+  92   1            delayT0(10);
+  93   1            centena = 0;
+  94   1        
+  95   1            //atualiza display do milhar
+  96   1            dados7seg = decodificaAlgorismo(((int)(numero/1000)%10));
+  97   1            milhar = 1;
+  98   1            delayT0(10);
+  99   1            milhar = 0;
+ 100   1        
+ 101   1            return;
+ 102   1      }
+ 103          
+ 104          
+ 105          void verificaSegundo() interrupt 3{
+ 106   1        //Verifica se um segundo passou, levando em consideração que para que isso aconteça
+ 107   1        //a função espera 50ms precisa ser executada 200 vezes.
+ 108   1        desativaT1();
+ 109   1        contadorDeMiliSeg++; //anota mais uma execução da função espera 50ms
+ 110   1        if (contadorDeMiliSeg == 200){
+ 111   2          segundosDisplay--; //diminui o valor de segundos exibido no display
+ 112   2          contadorDeMiliSeg = 0;
+ 113   2        }
+ 114   1        iniciaCont50msT1(); // inicia o contador novamente
+ 115   1        return;
+ 116   1      }
+C51 COMPILER V9.60.0.0   LETICIA_TF                                                        11/07/2021 17:33:31 PAGE 3   
+
+ 117          
+ 118          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    408    ----
+   CONSTANT SIZE    =     20    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      6      24
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
