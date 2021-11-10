@@ -26,7 +26,7 @@ void main()
 		//if(segundosDisplay == 0){
 		//	ativaAgua();
 		//}
-		defineIntervalo();
+		identificaCaractere();
 		//delayT0(1000);
 	}
 }
@@ -85,8 +85,7 @@ int identificaCaractere()
 	while (1)
 	{
 		int delayTempo = 50;
-		delayT0(delayTempo);
-
+		
 		bitLinhaA = 0;
 		bitLinhaB = 1;
 		bitLinhaC = 1;
@@ -103,6 +102,8 @@ int identificaCaractere()
 		{
 			return 3;
 		}
+		
+		
 		delayT0(delayTempo);
 		bitLinhaA = 1;
 		bitLinhaB = 0;
@@ -157,7 +158,6 @@ int identificaCaractere()
 		{
 			return -10; //#
 		}
-		delayT0(delayTempo);
 	}
 }
 
