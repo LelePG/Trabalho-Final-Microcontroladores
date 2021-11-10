@@ -16,11 +16,13 @@
 #define milhar P1_4
 
 //Dados relativos ao Keypad
-#define bitLinhaA P0_0
-#define bitLinhaB P0_1
-#define bitColuna1 P0_2
-#define bitColuna2 P0_3
-#define bitColuna3 P0_4
+#define bitLinhaA P2_0
+#define bitLinhaB P2_1
+#define bitLinhaC P2_2
+#define bitLinhaD P2_3
+#define bitColuna1 P0_0
+#define bitColuna2 P0_1
+#define bitColuna3 P0_2
 
 //Pinos relativos aos LEDs
 #define enableLEDs P3_0
@@ -45,11 +47,11 @@ void main(){
 		configuraAplicacao();
 while(1){
 	
-	atualizaDisplays(segundosDisplay);
-	if(segundosDisplay == 0){
-		ativaAgua();
-	}
-	
+	//atualizaDisplays(segundosDisplay);
+	//if(segundosDisplay == 0){
+	//	ativaAgua();
+	//}
+	defineIntervalo();
 	//delayT0(1000);
 
 }
@@ -61,6 +63,7 @@ while(1){
 void ligaLED(int tempoDelay){//Protótipo tem coisa pra melhorar aqui
 		enableAllLEDs = 0;
 	enableLEDs = 1;
+	tempoDelay = tempoDelay/7;
 	for (c = 0; c<=10; c++){
 		decodificaAlgorismo(c);
 		delayT0(tempoDelay*0.5);
@@ -73,10 +76,12 @@ void ligaLED(int tempoDelay){//Protótipo tem coisa pra melhorar aqui
 }
 	
 void configuraAplicacao(){
-defineIntervalo();
 		enableAllLEDs = 0;
 	enableLEDs = 0;
-EA = 1;
+defineIntervalo();
+
+	
+	EA = 1;
 ET1 = 1;
 EX0 = 1;
 	EX1 = 1;
@@ -91,6 +96,8 @@ int defineIntervalo(){
 			tempoFinal *= 10;
 			tempoFinal +=inputUsuario;
 			inputUsuario = identificaCaractere();
+			atualizaDisplays(inputUsuario);
+			delayT0(300);
 		}while(inputUsuario >= 0);
 		valorResetaTimer = 7;//tempoFinal;
 		return tempoFinal;
@@ -101,9 +108,13 @@ int identificaCaractere(){
 	
 	
 while(1){
-	
-	bitLinhaA=0;
-	bitLinhaB=0;
+	int delayTempo = 50;
+		delayT0(delayTempo);
+
+	bitLinhaA =0;
+bitLinhaB =1;
+	bitLinhaC =1;
+ bitLinhaD = 1;
 	if(bitColuna1 == 0 ){
 		return 1;
 	} else if (bitColuna2 ==0){
@@ -111,10 +122,11 @@ while(1){
 	} else if(bitColuna3 ==0){
 		return 3;
 	}
-	delayT0(65);
-	
-	bitLinhaA=1;
-	bitLinhaB=0;
+	delayT0(delayTempo);
+	bitLinhaA =1;
+bitLinhaB =0;
+	bitLinhaC =1;
+ bitLinhaD = 1;
 	if(bitColuna1 == 0 ){
 		return 4;
 	} else if (bitColuna2 ==0){
@@ -123,10 +135,11 @@ while(1){
 		return 6;
 	}
 	
-	delayT0(65);
-	
-	bitLinhaA=0;
-	bitLinhaB=1;
+	delayT0(delayTempo);
+	bitLinhaA =1;
+bitLinhaB =1;
+	bitLinhaC =0;
+ bitLinhaD = 1;
 	if(bitColuna1 == 0 ){
 		return 7;
 	} else if (bitColuna2 ==0){
@@ -135,18 +148,20 @@ while(1){
 		return 9;
 	}
 	
-	delayT0(65);
+	delayT0(delayTempo);
 	
-	bitLinhaA=1;
-	bitLinhaB=1;
+	bitLinhaA =1;
+bitLinhaB =1;
+	bitLinhaC =1;
+ bitLinhaD = 0;
 	if(bitColuna1 == 0 ){
-		return -1;//*
+		return -5;//*
 	} else if (bitColuna2 ==0){
 		return 0;
 	} else if(bitColuna3 ==0){
-		return -2;//#
+		return -10;//#
 	}
-	delayT0(65);
+	delayT0(delayTempo);
 }
 }
 
