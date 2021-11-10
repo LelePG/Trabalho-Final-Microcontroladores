@@ -22,11 +22,10 @@ void main()
 	while (1)
 	{
 
-		//atualizaDisplays(segundosDisplay);
+		atualizaDisplays(segundosDisplay);
 		//if(segundosDisplay == 0){
 		//	ativaAgua();
 		//}
-		identificaCaractere();
 		//delayT0(1000);
 	}
 }
@@ -72,92 +71,81 @@ int defineIntervalo()
 		tempoFinal *= 10;
 		tempoFinal += inputUsuario;
 		inputUsuario = identificaCaractere();
-		atualizaDisplays(inputUsuario);
+		//atualizaDisplays(inputUsuario);
 		delayT0(300);
 	} while (inputUsuario >= 0);
-	valorResetaTimer = 7; //tempoFinal;
+	valorResetaTimer = tempoFinal;
 	return tempoFinal;
+}
+
+int leColunas(int a, int b, int c){
+	
+	if (bitColuna1 )
+		{
+			return a;
+		}
+		else if (bitColuna2)
+		{
+			return b;
+		}
+		else if (bitColuna3)
+		{
+			return c;
+		}
+		
+		return 99;
+	
 }
 
 int identificaCaractere()
 {
-
+int valorLido;
 	while (1)
 	{
-		int delayTempo = 50;
-		
+		int delayTempo = 30;
+		delayT0(delayTempo);
+
 		bitLinhaA = 0;
-		bitLinhaB = 1;
-		bitLinhaC = 1;
-		bitLinhaD = 1;
-		if (bitColuna1 == 0)
-		{
-			return 1;
-		}
-		else if (bitColuna2 == 0)
-		{
-			return 2;
-		}
-		else if (bitColuna3 == 0)
-		{
-			return 3;
+		bitLinhaB = 0;
+	
+		valorLido = leColunas(1,2,3);
+		if(valorLido!=99){
+			return valorLido;
 		}
 		
 		
 		delayT0(delayTempo);
 		bitLinhaA = 1;
 		bitLinhaB = 0;
-		bitLinhaC = 1;
-		bitLinhaD = 1;
-		if (bitColuna1 == 0)
-		{
-			return 4;
-		}
-		else if (bitColuna2 == 0)
-		{
-			return 5;
-		}
-		else if (bitColuna3 == 0)
-		{
-			return 6;
+
+		
+		valorLido = leColunas(4,5,6);
+		if(valorLido!=99){
+			return valorLido;
 		}
 
 		delayT0(delayTempo);
-		bitLinhaA = 1;
+		bitLinhaA = 0;
 		bitLinhaB = 1;
-		bitLinhaC = 0;
-		bitLinhaD = 1;
-		if (bitColuna1 == 0)
-		{
-			return 7;
-		}
-		else if (bitColuna2 == 0)
-		{
-			return 8;
-		}
-		else if (bitColuna3 == 0)
-		{
-			return 9;
-		}
 
+		
+		valorLido = leColunas(7,8,9);
+		if(valorLido!=99){
+			return valorLido;
+		}
+		
 		delayT0(delayTempo);
 
 		bitLinhaA = 1;
 		bitLinhaB = 1;
-		bitLinhaC = 1;
-		bitLinhaD = 0;
-		if (bitColuna1 == 0)
-		{
-			return -5; //*
+
+		
+		valorLido = leColunas(-5,0,-10); // -5 = * e -10 = #
+		if(valorLido!=99){
+			return valorLido;
 		}
-		else if (bitColuna2 == 0)
-		{
-			return 0;
-		}
-		else if (bitColuna3 == 0)
-		{
-			return -10; //#
-		}
+		
+		delayT0(delayTempo);
 	}
 }
 

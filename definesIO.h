@@ -13,10 +13,9 @@
 #define milhar P1_4
 
 //Dados relativos ao Keypad
-#define bitLinhaA P2_0
-#define bitLinhaB P2_1
-#define bitLinhaC P2_2
-#define bitLinhaD P2_3
+#define bitLinhaA P2_3
+#define bitLinhaB P2_4
+
 #define bitColuna1 P0_0
 #define bitColuna2 P0_1
 #define bitColuna3 P0_2
