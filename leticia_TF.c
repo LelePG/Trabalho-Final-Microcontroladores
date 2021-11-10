@@ -34,7 +34,7 @@ int identificaCaractere(void);
 void decodificaAlgorismo(int numero);
 int defineIntervalo();
 void configuraAplicacao();
-void ligaLED();
+void ligaLED(int tempoDelay);
 
 int valorResetaTimer = 200;
 
@@ -42,14 +42,14 @@ int contadorDeMiliSeg;
 int segundosDisplay;
 
 void main(){
-		//configuraAplicacao();
+		configuraAplicacao();
 while(1){
 	
-	////atualizaDisplays(segundosDisplay);
-	//if(segundosDisplay == 0){
-	//	ativaAgua();
-	//}
-	ligaLED();
+	atualizaDisplays(segundosDisplay);
+	if(segundosDisplay == 0){
+		ativaAgua();
+	}
+	
 	//delayT0(1000);
 
 }
@@ -58,27 +58,24 @@ while(1){
 
 	int c = 0;
 
-void ligaLED(){//Protótipo tem coisa pra melhorar aqui
+void ligaLED(int tempoDelay){//Protótipo tem coisa pra melhorar aqui
 		enableAllLEDs = 0;
 	enableLEDs = 1;
 	for (c = 0; c<=10; c++){
 		decodificaAlgorismo(c);
-		delayT0(500);
+		delayT0(tempoDelay*0.5);
 	}
 	enableAllLEDs = 1;
-	delayT0(500);
+	delayT0(tempoDelay *2);
 	enableAllLEDs = 0;
-	for (c = 10; c>=0; c--){
-		decodificaAlgorismo(c);
-		delayT0(500);
-	}
-	
-	decodificaAlgorismo(11);
-delayT0(500);	
+	enableLEDs = 0;
+
 }
 	
 void configuraAplicacao(){
 defineIntervalo();
+		enableAllLEDs = 0;
+	enableLEDs = 0;
 EA = 1;
 ET1 = 1;
 EX0 = 1;
@@ -162,7 +159,8 @@ void ativaAgua(void) interrupt 2{ // foi apertardo o botão p3.2
 	
 	
   //Ativa luz, buzzer e bomba
-	delayT0(1000);
+	ligaLED(500);
+
 	
 	EA = 1;
 	iniciaCont50msT1();
