@@ -1,8 +1,3 @@
-int decodificaAlgorismo(int numero){
-	int valoresBinarios[10] = {2,159,37,13,153,73,65,31,0,25};
-	return valoresBinarios[numero];
-}
-
 
 void delay1ms(){
 	//Frequência do microcontrolador: f = 11.0592M
@@ -55,3 +50,5 @@ void desativaT1(){
 	TR1 = 0; //para o contador
 	TF1 = 0; //reseta a flag do overflow, ou na próxima iteração nem vamos entrar no laço.
 }
+
+

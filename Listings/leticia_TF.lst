@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   LETICIA_TF                                                        11/07/2021 17:33:31 PAGE 1   
+C51 COMPILER V9.60.0.0   LETICIA_TF                                                        11/09/2021 23:11:42 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE LETICIA_TF
@@ -10,134 +10,260 @@ line level    source
 
    1          #include<at89x52.h>
    2          #include <libTF.h>
-   3          #include <i2c.h>
-   4          
-   5          #define bombaAgua P0_0
-   6          #define buzzer P0_1
-   7          
-   8          //Dados relativos ao display de 7 segmentos
-   9          #define dados7seg P2
-  10          #define unidade P1_7
-  11          #define dezena P1_6
-  12          #define centena P1_5
-  13          #define milhar P1_4
-  14          
-  15          //Dados relativos ao display LCD
-  16          #define scl P1_0
-  17          #define sda P1_1
+   3          
+   4          #define bombaAgua P0_6
+   5          #define buzzer P0_7
+   6          
+   7          //Dados relativos ao display de 7 segmentos
+   8          //BCD
+   9          #define bitA P1_0
+  10          #define bitB P1_1
+  11          #define bitC P1_2
+  12          #define bitD P1_3
+  13          //Multiplexação
+  14          #define unidade P1_7
+  15          #define dezena P1_6
+  16          #define centena P1_5
+  17          #define milhar P1_4
   18          
-  19          
-  20          void ativaAgua(void);
-  21          void atualizaDisplays(int numero);
-  22          void verificaSegundo(); //Verifica se um segundo se passou
-  23          
-  24          
-  25          int valorResetaContador = 251;
+  19          //Dados relativos ao Keypad
+  20          #define bitLinhaA P0_0
+  21          #define bitLinhaB P0_1
+  22          #define bitColuna1 P0_2
+  23          #define bitColuna2 P0_3
+  24          #define bitColuna3 P0_4
+  25          
   26          
-  27          int contadorDeMiliSeg;
-  28          int segundosDisplay = 300;
-  29          
-  30          void main(){
-  31   1        EA = 1;
-  32   1        ET1 = 1;
-  33   1        EX0 = 1;
-  34   1        iniciaCont50msT1();
-  35   1      
-  36   1        while(1){ 
-  37   2            //ativaAgua();
-  38   2          //atualizaDisplays(segundosDisplay);
-  39   2          //delayT0(100);
-  40   2          
-  41   2          /* Init i2c ports first */
-  42   2        I2CInit();
-  43   2        /* Send start condition */
-  44   2        I2CStart();
-  45   2        /* Send slave address */
-  46   2      
-  47   2        /*
-  48   2         * ack == 1 => NAK
-  49   2         * ack == 0 => ACK
-  50   2         */
-  51   2         I2CSend(0x20);
-  52   2        /* Send another data */
-  53   2        
-  54   2        /* Send stop condition */
-C51 COMPILER V9.60.0.0   LETICIA_TF                                                        11/07/2021 17:33:31 PAGE 2   
+  27          #define ledTeste P0_5
+  28          
+  29          void ativaAgua(void);
+  30          void atualizaDisplays(int numero);
+  31          void verificaSegundo(); //Verifica se um segundo se passou
+  32          int identificaCaractere(void);
+  33          void decodificaAlgorismo(int numero);
+  34          
+  35          int valorResetaContador = 251;
+  36          
+  37          int contadorDeMiliSeg;
+  38          int segundosDisplay = 300;
+  39          
+  40          void main(){
+  41   1        //EA = 1;
+  42   1        //ET1 = 1;
+  43   1        //EX0 = 1;
+  44   1        //iniciaCont50msT1();
+  45   1        P2_2 = 1;
+  46   1        while(1){ 
+  47   2            //ativaAgua();
+  48   2          int k = identificaCaractere();
+  49   2      delayT0(100);
+  50   2          atualizaDisplays(k);
+  51   2        
+  52   2          delayT0(100);
+  53   2          
+  54   2      }
+C51 COMPILER V9.60.0.0   LETICIA_TF                                                        11/09/2021 23:11:42 PAGE 2   
 
-  55   2        
-  56   2        }
-  57   1      }
-  58          
-  59           //Rotina de ativar a água
-  60          void ativaAgua(void){
-  61   1        bombaAgua = 0;
-  62   1        //luz.setCode(1);
-  63   1        buzzer = 1845;
-  64   1        delayT0(1000);
-  65   1        bombaAgua= 1;
-  66   1        buzzer = 0;
-  67   1        delayT0(10);
-  68   1        
-  69   1        
-  70   1        //luz.setCode(6);
-  71   1      }
-  72          
-  73          
-  74          
-  75          
-  76          void atualizaDisplays(int numero){
-  77   1            //atualiza display da unidade
-  78   1            dados7seg = decodificaAlgorismo(numero%10);
-  79   1            unidade = 1;
-  80   1            delayT0(10);
-  81   1            unidade = 0;
+  55   1        }
+  56            
+  57          int identificaCaractere(){
+  58   1        bitLinhaA=0;
+  59   1        bitLinhaB=0;
+  60   1        if(bitColuna1 == 0 ){
+  61   2          bitColuna1 = 1;
+  62   2          return 1;
+  63   2        } else if (bitColuna2 ==0){
+  64   2          bitColuna2 = 1;
+  65   2          return 2;
+  66   2        } else if(bitColuna3 ==0){
+  67   2          return 3;
+  68   2        }
+  69   1        //delayT0(100);
+  70   1        
+  71   1        bitLinhaA=1;
+  72   1        bitLinhaB=0;
+  73   1        if(bitColuna1 == 0 ){
+  74   2          return 4;
+  75   2        } else if (bitColuna2 ==0){
+  76   2          return 5;
+  77   2        } else if(bitColuna3 ==0){
+  78   2          return 6;
+  79   2        }
+  80   1        
+  81   1        //delayT0(100);
   82   1        
-  83   1            //atualiza display da dezena
-  84   1            dados7seg = decodificaAlgorismo(((int)(numero/10)%10));
-  85   1            dezena = 1;
-  86   1            delayT0(10);
-  87   1            dezena = 0;
-  88   1        
-  89   1            //atualiza display da centena
-  90   1            dados7seg = decodificaAlgorismo(((int)(numero/100)%10));
-  91   1            centena = 1;
-  92   1            delayT0(10);
-  93   1            centena = 0;
+  83   1        bitLinhaA=0;
+  84   1        bitLinhaB=1;
+  85   1        if(bitColuna1 == 0 ){
+  86   2          return 7;
+  87   2        } else if (bitColuna2 ==0){
+  88   2          return 8;
+  89   2        } else if(bitColuna3 ==0){
+  90   2          return 9;
+  91   2        }
+  92   1        
+  93   1        //delayT0(100);
   94   1        
-  95   1            //atualiza display do milhar
-  96   1            dados7seg = decodificaAlgorismo(((int)(numero/1000)%10));
-  97   1            milhar = 1;
-  98   1            delayT0(10);
-  99   1            milhar = 0;
- 100   1        
- 101   1            return;
- 102   1      }
- 103          
- 104          
- 105          void verificaSegundo() interrupt 3{
- 106   1        //Verifica se um segundo passou, levando em consideração que para que isso aconteça
- 107   1        //a função espera 50ms precisa ser executada 200 vezes.
- 108   1        desativaT1();
- 109   1        contadorDeMiliSeg++; //anota mais uma execução da função espera 50ms
- 110   1        if (contadorDeMiliSeg == 200){
- 111   2          segundosDisplay--; //diminui o valor de segundos exibido no display
- 112   2          contadorDeMiliSeg = 0;
- 113   2        }
- 114   1        iniciaCont50msT1(); // inicia o contador novamente
- 115   1        return;
- 116   1      }
-C51 COMPILER V9.60.0.0   LETICIA_TF                                                        11/07/2021 17:33:31 PAGE 3   
+  95   1        bitLinhaA=1;
+  96   1        bitLinhaB=1;
+  97   1        if(bitColuna1 == 0 ){
+  98   2          return 0;
+  99   2        } else if (bitColuna2 ==0){
+ 100   2          return 0;
+ 101   2        } else if(bitColuna3 ==0){
+ 102   2          return 0;
+ 103   2        }
+ 104   1        
+ 105   1        //delayT0(100);
+ 106   1        
+ 107   1        return 0;
+ 108   1      
+ 109   1        
+ 110   1      }
+ 111          
+ 112           //Rotina de ativar a água
+ 113          void ativaAgua(void){
+ 114   1        bombaAgua = 0;
+ 115   1        //luz.setCode(1);
+ 116   1        buzzer = 1845;
+C51 COMPILER V9.60.0.0   LETICIA_TF                                                        11/09/2021 23:11:42 PAGE 3   
 
- 117          
- 118          
+ 117   1        delayT0(1000);
+ 118   1        bombaAgua= 1;
+ 119   1        buzzer = 0;
+ 120   1        delayT0(10);
+ 121   1        
+ 122   1        
+ 123   1        //luz.setCode(6);
+ 124   1      }
+ 125          
+ 126          
+ 127          
+ 128          
+ 129          void atualizaDisplays(int numero){
+ 130   1            //atualiza display da unidade
+ 131   1            decodificaAlgorismo(numero%10);
+ 132   1            unidade = 0;
+ 133   1            delayT0(10);
+ 134   1            unidade = 1;
+ 135   1        
+ 136   1            //atualiza display da dezena
+ 137   1            decodificaAlgorismo(((int)(numero/10)%10));
+ 138   1            dezena = 0;
+ 139   1            delayT0(10);
+ 140   1            dezena = 1;
+ 141   1        
+ 142   1            //atualiza display da centena
+ 143   1            decodificaAlgorismo(((int)(numero/100)%10));
+ 144   1            centena = 0;
+ 145   1            delayT0(10);
+ 146   1            centena = 1;
+ 147   1        
+ 148   1            //atualiza display do milhar
+ 149   1            decodificaAlgorismo(((int)(numero/1000)%10));
+ 150   1            milhar = 0;
+ 151   1            delayT0(10);
+ 152   1            milhar = 1;
+ 153   1        
+ 154   1            return;
+ 155   1      }
+ 156          
+ 157          
+ 158          void verificaSegundo() interrupt 3{
+ 159   1        //Verifica se um segundo passou, levando em consideração que para que isso aconteça
+ 160   1        //a função espera 50ms precisa ser executada 200 vezes.
+ 161   1        desativaT1();
+ 162   1        contadorDeMiliSeg++; //anota mais uma execução da função espera 50ms
+ 163   1        if (contadorDeMiliSeg == 200){
+ 164   2          segundosDisplay--; //diminui o valor de segundos exibido no display
+ 165   2          contadorDeMiliSeg = 0;
+ 166   2        }
+ 167   1        iniciaCont50msT1(); // inicia o contador novamente
+ 168   1        return;
+ 169   1      }
+ 170          
+ 171          void decodificaAlgorismo(int numero){
+ 172   1        switch(numero){
+ 173   2          case 0:
+ 174   2            bitA = 0;
+ 175   2            bitB = 0;
+ 176   2            bitC = 0;
+ 177   2            bitD = 0;
+ 178   2            break;
+C51 COMPILER V9.60.0.0   LETICIA_TF                                                        11/09/2021 23:11:42 PAGE 4   
+
+ 179   2          case 1:
+ 180   2            bitA = 1;
+ 181   2            bitB = 0;
+ 182   2            bitC = 0;
+ 183   2            bitD = 0;
+ 184   2            break;
+ 185   2          case 2:
+ 186   2            bitA = 0;
+ 187   2            bitB = 1;
+ 188   2            bitC = 0;
+ 189   2            bitD = 0;
+ 190   2            break;
+ 191   2          case 3:
+ 192   2            bitA = 1;
+ 193   2            bitB = 1;
+ 194   2            bitC = 0;
+ 195   2            bitD = 0;
+ 196   2            break;
+ 197   2          case 4:
+ 198   2            bitA = 0;
+ 199   2            bitB = 0;
+ 200   2            bitC = 1;
+ 201   2            bitD = 0;
+ 202   2            break;
+ 203   2          case 5:
+ 204   2            bitA = 1;
+ 205   2            bitB = 0;
+ 206   2            bitC = 1;
+ 207   2            bitD = 0;
+ 208   2            break;
+ 209   2          case 6:
+ 210   2            bitA = 0;
+ 211   2            bitB = 1;
+ 212   2            bitC = 1;
+ 213   2            bitD = 0;
+ 214   2            break;
+ 215   2          case 7:
+ 216   2            bitA = 1;
+ 217   2            bitB = 1;
+ 218   2            bitC = 1;
+ 219   2            bitD = 0;
+ 220   2            break;
+ 221   2          case 8:
+ 222   2            bitA = 0;
+ 223   2            bitB = 0;
+ 224   2            bitC = 0;
+ 225   2            bitD = 1;
+ 226   2            break;    
+ 227   2          case 9:
+ 228   2            bitA = 1;
+ 229   2            bitB = 0;
+ 230   2            bitC = 0;
+ 231   2            bitD = 1;
+ 232   2            break;
+ 233   2          
+ 234   2        }
+ 235   1        
+ 236   1        
+ 237   1        return;
+ 238   1      }
+ 239          
+ 240          
+C51 COMPILER V9.60.0.0   LETICIA_TF                                                        11/09/2021 23:11:42 PAGE 5   
+
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    408    ----
-   CONSTANT SIZE    =     20    ----
+   CODE SIZE        =    452    ----
+   CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =      6      24
+   DATA SIZE        =      6       4
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.

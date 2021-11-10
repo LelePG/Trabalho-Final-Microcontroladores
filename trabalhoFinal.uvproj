@@ -391,11 +391,6 @@
               <FileType>5</FileType>
               <FilePath>.\libTF.h</FilePath>
             </File>
-            <File>
-              <FileName>i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\i2c.h</FilePath>
-            </File>
           </Files>
         </Group>
       </Groups>
