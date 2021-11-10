@@ -31,42 +31,67 @@ void atualizaDisplays(int numero);
 void verificaSegundo(); //Verifica se um segundo se passou
 int identificaCaractere(void);
 void decodificaAlgorismo(int numero);
+int defineIntervalo();
+void configuraAplicacao();
 
-int valorResetaContador = 251;
+int valorResetaTimer = 200;
 
 int contadorDeMiliSeg;
-int segundosDisplay = 300;
+int segundosDisplay;
 
 void main(){
-	//EA = 1;
-	//ET1 = 1;
-	//EX0 = 1;
-	//iniciaCont50msT1();
-	P2_2 = 1;
-	while(1){	
-			//ativaAgua();
-		int k = identificaCaractere();
-delayT0(100);
-		atualizaDisplays(k);
+		configuraAplicacao();
+while(1){
 	
-		delayT0(100);
-		
+	atualizaDisplays(segundosDisplay);
 }
+	//while(1){	
+			//ativaAgua();
+//delayT0(100);
+	//	atualizaDisplays(k);
+	
+		//delayT0(100);
+		
+//}
 	}
 	
+void configuraAplicacao(){
+defineIntervalo();
+EA = 1;
+ET1 = 1;
+EX0 = 1;
+segundosDisplay = valorResetaTimer;
+iniciaCont50msT1();
+}	
+	
+int defineIntervalo(){
+		int inputUsuario;
+	int tempoFinal;
+		do{
+			tempoFinal +=inputUsuario;
+			tempoFinal *= 10;
+			inputUsuario = identificaCaractere();
+		}while(inputUsuario >= 0);
+		valorResetaTimer = tempoFinal;
+		return tempoFinal;
+}	
+	
+	
 int identificaCaractere(){
+	
+	
+while(1){
+	
 	bitLinhaA=0;
 	bitLinhaB=0;
 	if(bitColuna1 == 0 ){
-		bitColuna1 = 1;
 		return 1;
 	} else if (bitColuna2 ==0){
-		bitColuna2 = 1;
 		return 2;
 	} else if(bitColuna3 ==0){
 		return 3;
 	}
-	//delayT0(100);
+	delayT0(65);
 	
 	bitLinhaA=1;
 	bitLinhaB=0;
@@ -78,7 +103,7 @@ int identificaCaractere(){
 		return 6;
 	}
 	
-	//delayT0(100);
+	delayT0(65);
 	
 	bitLinhaA=0;
 	bitLinhaB=1;
@@ -90,23 +115,19 @@ int identificaCaractere(){
 		return 9;
 	}
 	
-	//delayT0(100);
+	delayT0(65);
 	
 	bitLinhaA=1;
 	bitLinhaB=1;
 	if(bitColuna1 == 0 ){
-		return 0;
+		return -1;//*
 	} else if (bitColuna2 ==0){
 		return 0;
 	} else if(bitColuna3 ==0){
-		return 0;
+		return -2;//#
 	}
-	
-	//delayT0(100);
-	
-	return 0;
-
-	
+	delayT0(65);
+}
 }
 
  //Rotina de ativar a água
