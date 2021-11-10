@@ -1,7 +1,6 @@
 #include<at89x52.h>
 #include <libTF.h>
 
-#define bombaAgua P0_6
 #define buzzer P0_7
 
 //Dados relativos ao display de 7 segmentos
@@ -23,8 +22,10 @@
 #define bitColuna2 P0_3
 #define bitColuna3 P0_4
 
+//Pinos relativos aos LEDs
+#define enableLEDs P3_0
+#define enableAllLEDs P3_1
 
-#define ledTeste P0_5
 
 void ativaAgua(void);
 void atualizaDisplays(int numero);
@@ -33,6 +34,7 @@ int identificaCaractere(void);
 void decodificaAlgorismo(int numero);
 int defineIntervalo();
 void configuraAplicacao();
+void ligaLED();
 
 int valorResetaTimer = 200;
 
@@ -40,26 +42,47 @@ int contadorDeMiliSeg;
 int segundosDisplay;
 
 void main(){
-		configuraAplicacao();
+		//configuraAplicacao();
 while(1){
 	
-	atualizaDisplays(segundosDisplay);
+	////atualizaDisplays(segundosDisplay);
+	//if(segundosDisplay == 0){
+	//	ativaAgua();
+	//}
+	ligaLED();
+	//delayT0(1000);
+
 }
-	//while(1){	
-			//ativaAgua();
-//delayT0(100);
-	//	atualizaDisplays(k);
-	
-		//delayT0(100);
-		
-//}
+}
+
+
+	int c = 0;
+
+void ligaLED(){//Protótipo tem coisa pra melhorar aqui
+		enableAllLEDs = 0;
+	enableLEDs = 1;
+	for (c = 0; c<=10; c++){
+		decodificaAlgorismo(c);
+		delayT0(500);
 	}
+	enableAllLEDs = 1;
+	delayT0(500);
+	enableAllLEDs = 0;
+	for (c = 10; c>=0; c--){
+		decodificaAlgorismo(c);
+		delayT0(500);
+	}
+	
+	decodificaAlgorismo(11);
+delayT0(500);	
+}
 	
 void configuraAplicacao(){
 defineIntervalo();
 EA = 1;
 ET1 = 1;
 EX0 = 1;
+	EX1 = 1;
 segundosDisplay = valorResetaTimer;
 iniciaCont50msT1();
 }	
@@ -68,11 +91,11 @@ int defineIntervalo(){
 		int inputUsuario;
 	int tempoFinal;
 		do{
-			tempoFinal +=inputUsuario;
 			tempoFinal *= 10;
+			tempoFinal +=inputUsuario;
 			inputUsuario = identificaCaractere();
 		}while(inputUsuario >= 0);
-		valorResetaTimer = tempoFinal;
+		valorResetaTimer = 7;//tempoFinal;
 		return tempoFinal;
 }	
 	
@@ -130,18 +153,20 @@ while(1){
 }
 }
 
- //Rotina de ativar a água
-void ativaAgua(void){
-  bombaAgua = 0;
-  //luz.setCode(1);
-  buzzer = 1845;
-  delayT0(1000);
-  bombaAgua= 1;
-	buzzer = 0;
-	delayT0(10);
+void ativaAgua(void) interrupt 2{ // foi apertardo o botão p3.2
+	//reseta o contador principal
+	EA = 0;
+	//desativaT1();
+	contadorDeMiliSeg = 0;
+	segundosDisplay = valorResetaTimer;
 	
 	
-  //luz.setCode(6);
+  //Ativa luz, buzzer e bomba
+	delayT0(1000);
+	
+	EA = 1;
+	iniciaCont50msT1();
+	return;
 }
 
 
