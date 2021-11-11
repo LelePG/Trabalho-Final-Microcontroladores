@@ -396,6 +396,16 @@
               <FileType>5</FileType>
               <FilePath>.\lib_timers.h</FilePath>
             </File>
+            <File>
+              <FileName>lib_7seg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\lib_7seg.h</FilePath>
+            </File>
+            <File>
+              <FileName>lib_keypad.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\lib_keypad.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

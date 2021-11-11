@@ -35,7 +35,6 @@ void ligaLED(int tempoDelay)
 { //Prot�tipo tem coisa pra melhorar aqui
 	enableAllLEDs = 0;
 	enableLEDs = 1;
-	tempoDelay = tempoDelay / 7;
 	for (c = 0; c <= 10; c++)
 	{
 		decodificaAlgorismo(c);
@@ -48,7 +47,7 @@ void ligaLED(int tempoDelay)
 	return;
 }
 
-void configuraAplicacao()
+void configuraAplicacao() interrupt 0
 {
 	enableAllLEDs = 0;
 	enableLEDs = 0;
@@ -80,7 +79,7 @@ int defineIntervalo()
 
 
 
-void ativaAgua(void) interrupt 2
+void ativaAgua(void) interrupt 2//não está retornando pra main
 { // foi apertardo o bot�o p3.2
 	//reseta o contador principal
 	EA = 0;
