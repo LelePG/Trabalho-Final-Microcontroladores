@@ -2,12 +2,12 @@
 
 ## O que é este projeto?
 
-Este é o trabalho final da disciplina de Microcontroladores ofertada em 2021/1 (semestre remoto) no curso de Engenharia de computação da Universidade Federal de Prlotas.
+Este é o trabalho final da disciplina de Microcontroladores ofertada em 2021/1 (semestre remoto) no curso de Engenharia de computação da Universidade Federal de Pelotas.
 A proposta a ser desenvolvida neste projeto é um sistema que dispensa água em intervalos definidos pelo usuário, ou de acordo com o aperto de um botão utilizando o microcontrolador 8051.
 
 ## Recursos de Hardware utilizados no projeto
 
-* ![Microcontrolador 8051](https://pdf1.alldatasheet.com/datasheet-pdf/view/82390/ATMEL/AT89S52.html) (utilizado a disciplina);
+* [Microcontrolador 8051](https://pdf1.alldatasheet.com/datasheet-pdf/view/82390/ATMEL/AT89S52.html) (utilizado a disciplina);
 * Display LCD 16X2;
 * Barra de LEDs;
 * Keypad 4X3;
