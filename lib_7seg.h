@@ -10,6 +10,9 @@
 #define centena P1_5
 #define milhar P1_4
 
+void decodificaAlgorismo(int numero);
+void atualizaDisplays(int numero);
+
 
 
 void decodificaAlgorismo(int numero)

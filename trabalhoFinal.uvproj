@@ -406,6 +406,11 @@
               <FileType>5</FileType>
               <FilePath>.\lib_keypad.h</FilePath>
             </File>
+            <File>
+              <FileName>lib_lcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\lib_lcd.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

@@ -5,5 +5,5 @@
 
 
 //Pinos relativos aos LEDs
-#define enableLEDs P3_0
-#define enableAllLEDs P3_1
+#define enableLEDs P0_7
+#define enableAllLEDs P0_6

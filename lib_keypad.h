@@ -1,6 +1,6 @@
 //Dados relativos ao Keypad
-#define bitLinhaA P2_3
-#define bitLinhaB P2_4
+#define bitLinhaA P3_6
+#define bitLinhaB P3_7
 
 #define bitColuna1 P0_0
 #define bitColuna2 P0_1

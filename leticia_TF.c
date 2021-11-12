@@ -2,6 +2,7 @@
 #include <lib_timers.h>
 #include <lib_7seg.h>
 #include <lib_keypad.h>
+#include <lib_lcd.h>
 #include <definesIO.h>
 
 
@@ -17,6 +18,7 @@ int segundosDisplay;
 
 void main()
 {
+	configLCD();
 	configuraAplicacao();
 	while (1)
 	{
@@ -63,8 +65,11 @@ void configuraAplicacao() interrupt 0
 
 int defineIntervalo()
 {
+
 	int inputUsuario;
 	int tempoFinal = 0;
+		mensagemInicial();
+
 	do
 	{
 		tempoFinal *= 10;
@@ -74,6 +79,8 @@ int defineIntervalo()
 		delayT0(300);
 	} while (inputUsuario >= 0);
 	valorResetaTimer = tempoFinal;
+	
+	clearLCD();
 	return tempoFinal;
 }
 
@@ -82,6 +89,8 @@ int defineIntervalo()
 void ativaAgua(void) interrupt 2//não está retornando pra main
 { // foi apertardo o bot�o p3.2
 	//reseta o contador principal
+	mensagemAguaInicial();
+	
 	EA = 0;
 	unidade = 1;
 	dezena = 1;
@@ -96,6 +105,8 @@ void ativaAgua(void) interrupt 2//não está retornando pra main
 
 	EA = 1;
 	iniciaCont50msT1();
+	
+	mensagemAguaFinal();
 	return;
 }
 
