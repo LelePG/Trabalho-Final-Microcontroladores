@@ -411,6 +411,11 @@
               <FileType>5</FileType>
               <FilePath>.\lib_lcd.h</FilePath>
             </File>
+            <File>
+              <FileName>lib_ativaAgua.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\lib_ativaAgua.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
