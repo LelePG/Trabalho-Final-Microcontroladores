@@ -4,7 +4,7 @@
 #include <lib_keypad.h>
 #include <lib_lcd.h>
 #include <lib_ativaAgua.h>
-#include <definesIO.h>
+
 
 
 void ativaAgua(void);
