@@ -1,31 +1,44 @@
 #include <at89x52.h>
 #include <lib_timers.h>
+#include <lib_interrupcoes.h>
 #include <lib_7seg.h>
 #include <lib_keypad.h>
 #include <lib_lcd.h>
+#include <lib_ativaAgua.h>
 #include <definesIO.h>
 
 
 void ativaAgua(void);
 void verificaSegundo(); //Verifica se um segundo se passou
-int defineIntervalo();
+void defineIntervalo();
 void configuraAplicacao();
-void ligaLED(int tempoDelay);
+void configInterrupcoes();
 
 int valorResetaTimer = 200;
 int contadorDeMiliSeg;
 int segundosDisplay;
 
+
+volatile bit flagAtivaAgua = 0;
+volatile bit flagDefineIntervalo = 0;
+
+
 void main()
 {
 	configLCD();
+	configInterrupcoes();
 	configuraAplicacao();
 	while (1)
 	{
-
 		atualizaDisplays(segundosDisplay);
 		if(segundosDisplay == 0){
 			ativaAgua();
+		} else if (flagAtivaAgua ==1){
+			ativaAgua();
+			EX1 = 1;
+		} else if (flagDefineIntervalo ==1){
+			defineIntervalo();
+			EX0 = 1;
 		}
 		//delayT0(1000);
 	}
@@ -33,62 +46,50 @@ void main()
 
 int c = 0;
 
-void ligaLED(int tempoDelay)
-{ //Prot�tipo tem coisa pra melhorar aqui
-	enableAllLEDs = 0;
-	enableLEDs = 1;
-	for (c = 0; c <= 10; c++)
-	{
-		decodificaAlgorismo(c);
-		delayT0(tempoDelay * 0.5);
-	}
-	enableAllLEDs = 1;
-	delayT0(tempoDelay * 2);
-	enableAllLEDs = 0;
-	enableLEDs = 0;
-	return;
-}
 
-void configuraAplicacao() interrupt 0
+
+
+void configuraAplicacao() 
 {
 	enableAllLEDs = 0;
 	enableLEDs = 0;
 	defineIntervalo();
 
-	EA = 1;
-	ET1 = 1;
-	EX0 = 1;
-	EX1 = 1;
-	segundosDisplay = valorResetaTimer;
 	iniciaCont50msT1();
+	
 }
 
-int defineIntervalo()
+void defineIntervalo()
 {
 
 	int inputUsuario;
-	int tempoFinal = 0;
+	valorResetaTimer	 = 0;
 		mensagemInicial();
 
 	do
 	{
-		tempoFinal *= 10;
-		tempoFinal += inputUsuario;
+			valorResetaTimer *= 10;
+			valorResetaTimer += inputUsuario;
 		inputUsuario = identificaCaractere();
 		//atualizaDisplays(inputUsuario);
 		delayT0(300);
 	} while (inputUsuario >= 0);
-	valorResetaTimer = tempoFinal;
-	
+	if(valorResetaTimer < 10){
+		valorResetaTimer = 10;
+	}
+
+
+	segundosDisplay = valorResetaTimer;
+
 	clearLCD();
-	return tempoFinal;
+	return;
 }
 
 
 
-void ativaAgua(void) interrupt 2//não está retornando pra main
-{ // foi apertardo o bot�o p3.2
-	//reseta o contador principal
+void ativaAgua(void) //não está retornando pra main
+{ 
+	flagAtivaAgua = 0;
 	mensagemAguaInicial();
 	
 	EA = 0;
@@ -101,12 +102,12 @@ void ativaAgua(void) interrupt 2//não está retornando pra main
 	segundosDisplay = valorResetaTimer;
 
 	//Ativa luz, buzzer e bomba
-	ligaLED(500);
-
-	EA = 1;
-	iniciaCont50msT1();
-	
+	ligaLED(90);
 	mensagemAguaFinal();
+	
+	iniciaCont50msT1();
+		EA = 1;
+
 	return;
 }
 
@@ -125,5 +126,26 @@ void verificaSegundo() interrupt 3
 	}
 	iniciaCont50msT1(); // inicia o contador novamente
 	return;
+}
+
+
+
+
+void configInterrupcoes(){
+	EA = 1;
+	ET1 = 1;
+	EX0 = 1;
+	EX1 = 1;
+	return;
+}
+
+void ativaAguaInterrupt() interrupt 2{
+	flagAtivaAgua = 1;
+	EX1 = 0;
+}
+
+void defineIntervaloInterrupt() interrupt 0{
+	flagDefineIntervalo = 1;
+	EX0 = 0;
 }
 
