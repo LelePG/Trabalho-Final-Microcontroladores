@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   LETICIA_TF                                                        11/10/2021 07:36:26 PAGE 1   
+C51 COMPILER V9.60.0.0   LETICIA_TF                                                        11/14/2021 00:27:01 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE LETICIA_TF
@@ -17,126 +17,159 @@ line level    source
    7          #include <definesIO.h>
    8          
    9          
-  10          void verificaSegundo(); //Verifica se um segundo se passou
-  11          void defineIntervalo();
-  12          void configuraAplicacao();
-  13          void ativaAgua(void);
-  14          
-  15          void teste();
-  16          
-  17          volatile int valorResetaTimer = 200;
-  18          volatile int contadorDeMiliSeg;
-  19          volatile int segundosDisplay;
-  20          
-  21          void main()
-  22          {
-  23   1        configLCD();
-  24   1        configuraAplicacao();
-  25   1        while (1)
-  26   1        {
-  27   2      
-  28   2          atualizaDisplays(segundosDisplay);
-  29   2          if(segundosDisplay == 0){
-  30   3            ativaAgua();
-  31   3          }
-  32   2          //delayT0(1000);
-  33   2        }
-  34   1      }
-  35          
-  36          void teste() interrupt 0{
-  37   1        configuraAplicacao();
-  38   1        
-  39   1      }
-  40          
-  41          void configuraAplicacao() 
-  42          {
-  43   1        defineIntervalo();
-  44   1        EA = 1;
-  45   1        ET1 = 1;
-  46   1        EX0 = 1;
-  47   1        EX1 = 1;
-  48   1        enableAllLEDs = 0;
-  49   1        ativaComponentes = 0;
-  50   1        segundosDisplay = valorResetaTimer;
-  51   1        iniciaCont50msT1();
-  52   1      }
-  53          
-  54          void defineIntervalo()
-C51 COMPILER V9.60.0.0   LETICIA_TF                                                        11/10/2021 07:36:26 PAGE 2   
+  10          void ativaAgua(void);
+  11          void verificaSegundo(); //Verifica se um segundo se passou
+  12          void defineIntervalo();
+  13          void configuraAplicacao();
+  14          void configInterrupcoes();
+  15          void ativaAguaInterrupt();
+  16          void defineIntervaloInterrupt();
+  17          
+  18          int valorResetaTimer = 200;
+  19          int contadorDeMiliSeg;
+  20          int segundosDisplay;
+  21          
+  22          
+  23          volatile bit flagAtivaAgua = 0;
+  24          volatile bit flagDefineIntervalo = 0;
+  25          
+  26          
+  27          void main()
+  28          {
+  29   1      
+  30   1        configLCD();
+  31   1        configInterrupcoes();
+  32   1        configuraAplicacao();
+  33   1        while (1)
+  34   1        {
+  35   2          atualizaDisplays(segundosDisplay);
+  36   2          if(segundosDisplay == 0){ //condição para ativar a ágia
+  37   3            ativaAgua();
+  38   3          } else if (flagAtivaAgua ==1){ //condição para ativar a água
+  39   3            flagAtivaAgua = 0;
+  40   3            ativaAgua();
+  41   3            EX1 = 1;
+  42   3          } else if (flagDefineIntervalo ==1){ //confição para mudar o intervalo entre hidratações
+  43   3            flagDefineIntervalo = 0;
+  44   3            defineIntervalo();
+  45   3            EX0 = 1;
+  46   3          }
+  47   2        }
+  48   1      }
+  49          
+  50          void configuraAplicacao() 
+  51          {
+  52   1        enableAllLEDs = 0;
+  53   1        enableLEDs = 0;
+  54   1        defineIntervalo();
+C51 COMPILER V9.60.0.0   LETICIA_TF                                                        11/14/2021 00:27:01 PAGE 2   
 
-  55          {
-  56   1      
-  57   1        int inputUsuario =0;
-  58   1        valorResetaTimer = 0;
-  59   1          mensagemInicial();
-  60   1      
-  61   1        do
-  62   1        {
-  63   2          valorResetaTimer *= 10;
-  64   2          valorResetaTimer += inputUsuario;
-  65   2          inputUsuario = identificaCaractere();
-  66   2          //atualizaDisplays(inputUsuario);
-  67   2          delayT0(300);
-  68   2        } while (inputUsuario >= 0);
-  69   1        
-  70   1        clearLCD();
-  71   1      }
-  72          
-  73          
-  74          
-  75          
-  76          
-  77          void verificaSegundo() interrupt 3
-  78          {
-  79   1        //Verifica se um segundo passou, levando em considera��o que para que isso aconte�a
-  80   1        //a fun��o espera 50ms precisa ser executada 200 vezes.
-  81   1        desativaT1();
-  82   1        contadorDeMiliSeg++; //anota mais uma execu��o da fun��o espera 50ms
-  83   1        if (contadorDeMiliSeg == 200)
-  84   1        {
-  85   2          segundosDisplay--; //diminui o valor de segundos exibido no display
-  86   2          contadorDeMiliSeg = 0;
-  87   2        }
-  88   1        iniciaCont50msT1(); // inicia o contador novamente
+  55   1        
+  56   1      }
+  57          
+  58          
+  59          void configInterrupcoes(){
+  60   1        EA = 1;
+  61   1        ET1 = 1;
+  62   1        EX0 = 1;
+  63   1        EX1 = 1;
+  64   1        return;
+  65   1      }
+  66          
+  67          void defineIntervalo()
+  68          {
+  69   1        int inputUsuario =0;
+  70   1        desativaT1();
+  71   1      
+  72   1        valorResetaTimer   = 0;
+  73   1          mensagemInicial();
+  74   1      
+  75   1        do
+  76   1        {
+  77   2            valorResetaTimer *= 10;
+  78   2            valorResetaTimer += inputUsuario;
+  79   2          inputUsuario = identificaCaractere();
+  80   2          //atualizaDisplays(inputUsuario);
+  81   2          delayT0(300);
+  82   2        } while (inputUsuario >= 0);
+  83   1        if(valorResetaTimer < 5){
+  84   2          valorResetaTimer = 5;
+  85   2        }
+  86   1      
+  87   1        clearLCD();
+  88   1        segundosDisplay = valorResetaTimer;
   89   1      
-  90   1      }
-  91          
-  92          void ativaAgua(void) interrupt 2//não está retornando pra main
-  93          { // foi apertardo o bot?o p3.2
-  94   1        //reseta o contador principal
-  95   1        mensagemAguaInicial();
-  96   1        
-  97   1        EA = 0;
-  98   1        unidade = 1;
-  99   1        dezena = 1;
- 100   1        centena = 1;
- 101   1        milhar = 1;
- 102   1        desativaT1();
- 103   1        contadorDeMiliSeg = 0;
- 104   1        segundosDisplay = valorResetaTimer;
- 105   1      
- 106   1        //Ativa luz, buzzer e bomba
- 107   1        ligaLED(500);
- 108   1      
- 109   1        EA = 1;
- 110   1        iniciaCont50msT1();
- 111   1        
+  90   1        iniciaCont50msT1();
+  91   1      
+  92   1        return;
+  93   1      }
+  94          
+  95          
+  96          
+  97          void ativaAgua(void) //não está retornando pra main
+  98          { 
+  99   1        mensagemAguaInicial();
+ 100   1        
+ 101   1        EA = 0;
+ 102   1        unidade = 1;
+ 103   1        dezena = 1;
+ 104   1        centena = 1;
+ 105   1        milhar = 1;
+ 106   1        desativaT1();
+ 107   1        contadorDeMiliSeg = 0;
+ 108   1        segundosDisplay = valorResetaTimer;
+ 109   1      
+ 110   1        //Ativa luz, buzzer e bomba
+ 111   1        ligaLED(90);
  112   1        mensagemAguaFinal();
- 113   1      
- 114   1      }
- 115          
+ 113   1        
+ 114   1        iniciaCont50msT1();
+ 115   1          EA = 1;
+ 116   1      
+C51 COMPILER V9.60.0.0   LETICIA_TF                                                        11/14/2021 00:27:01 PAGE 3   
 
-C51 COMPILER V9.60.0.0   LETICIA_TF                                                        11/10/2021 07:36:26 PAGE 3   
+ 117   1        return;
+ 118   1      }
+ 119          
+ 120          
+ 121          
+ 122          void defineIntervaloInterrupt() interrupt 0{
+ 123   1        flagDefineIntervalo = 1;
+ 124   1        EX0 = 0;
+ 125   1      }
+ 126          
+ 127          void ativaAguaInterrupt() interrupt 2{
+ 128   1        flagAtivaAgua = 1;
+ 129   1        EX1 = 0;
+ 130   1      }
+ 131          
+ 132          
+ 133          
+ 134          void verificaSegundo() interrupt 3
+ 135          {
+ 136   1        //Verifica se um segundo passou, levando em considera��o que para que isso aconte�a
+ 137   1        //a fun��o espera 50ms precisa ser executada 200 vezes.
+ 138   1        desativaT1();
+ 139   1        contadorDeMiliSeg++; //anota mais uma execu��o da fun��o espera 50ms
+ 140   1        if (contadorDeMiliSeg == 200)
+ 141   1        {
+ 142   2          segundosDisplay--; //diminui o valor de segundos exibido no display
+ 143   2          contadorDeMiliSeg = 0;
+ 144   2        }
+ 145   1        iniciaCont50msT1(); // inicia o contador novamente
+ 146   1        return;
+ 147   1      }
+ 148          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    990    ----
+   CODE SIZE        =    932    ----
    CONSTANT SIZE    =     67    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =      8      10
    IDATA SIZE       =   ----    ----
-   BIT SIZE         =   ----    ----
+   BIT SIZE         =      2    ----
 END OF MODULE INFORMATION.
 
 

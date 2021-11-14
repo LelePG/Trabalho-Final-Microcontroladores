@@ -26,6 +26,7 @@ volatile bit flagDefineIntervalo = 0;
 
 void main()
 {
+
 	configLCD();
 	configInterrupcoes();
 	configuraAplicacao();

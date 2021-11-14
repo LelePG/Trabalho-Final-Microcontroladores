@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\leticia_TF.obj" 
+TO ".\Objects\trabalhoFinalLeticia" 
+PRINT(".\Listings\trabalhoFinalLeticia.m51") RAMSIZE(256) 
