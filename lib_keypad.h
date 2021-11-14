@@ -31,7 +31,7 @@ int identificaCaractere()
 int valorLido;
 	while (1)
 	{
-		int delayTempo = 50;
+		int delayTempo = 30;
 
 		bitLinhaA = 0;
 		bitLinhaB = 0;

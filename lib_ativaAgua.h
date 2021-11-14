@@ -5,7 +5,7 @@
 #define ativaComponentes P0_7 //utilizada para os LEDs e para a "bomba"
 #define enableAllLEDs P0_6
 
-	int c;
+int c;
 	
 void ligaLED(int tempoDelay)
 { 
