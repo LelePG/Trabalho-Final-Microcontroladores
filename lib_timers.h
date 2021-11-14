@@ -1,5 +1,10 @@
+//Dados referentes ao timers 1 e 0
+void delay1msT0();	 //delay de 1 ms utilzando o timer 0
+void delayT0(int x); //delay de x milissegundos utilizando o Timer 0
+void inicia50msT1(); // inicia a contagem de tempo de 50ms no Timer 1
+void desativaT1();	 //para o contador T1
 
-void delay1ms()
+void delay1msT0()
 {
 	//Frequ�ncia do microcontrolador: f = 11.0592M
 	//Periodo: 1/f = T =  90.4224n
@@ -13,10 +18,8 @@ void delay1ms()
 	TL0 = 101; // inicia parte menos significativa
 	TH0 = 252; //inicia parte mais significativa
 	TR0 = 1;   // inicia o contador
-	do
-	{
-		//loop que n�o faz nada, apenas espera o overflow do contador
-	} while (TF0 != 1);
+	while (TF0 != 1)
+		;
 	TR0 = 0; //para o contador
 	TF0 = 0; //reseta a flag do overflow, ou na pr�xima itera��o nem vamos entrar no la�o.
 	return;
@@ -32,7 +35,7 @@ void delayT0(int x)
 	return;
 }
 
-void iniciaCont50msT1()
+void inicia50msT1()
 {
 	//Frequ�ncia do microcontrolador: f = 11.0592M
 	//Periodo: 1/f = T =  90.4224n

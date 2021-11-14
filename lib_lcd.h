@@ -1,17 +1,19 @@
-#define LCD			P2
-#define EN			P3_1
-#define RS			P3_0
+//Dados referentes ao LCS
+#define LCD P2
+#define EN P3_1
+#define RS P3_0
 
-void configLCD(void);
-void line1(void);
-void line2(void);
-void writeMSG(char msg[]);
-void wrCMD(void);
-void wrCHAR(void);
+void configLCD(void);	   //configuração inicial do LCS
+void line1(void);		   //coloca o cursor na linha 1
+void line2(void);		   // coloca o cursor na linha 2
+void writeMSG(char msg[]); //escreve uma mensagem no display
+void wrCMD(void);		   //escreve comando
+void wrCHAR(void);		   //escreve caractere
 
-void clearLCD();
-void mensagemInicial();
-
+void clearLCD();			//limpa o LCD
+void mensagemInicial();		//imprime a mensagem inicial da aplicação (utilizada para definir o intervalo)
+void mensagemAguaInicial(); //imprime mensagem de início de dispenser da água
+void mensagemAguaFinal();	//imprime mensagem de fim de dispenser da água
 
 void configLCD(void)
 {
@@ -26,7 +28,7 @@ void configLCD(void)
 }
 
 void line1(void)
-{	
+{
 	LCD = 0x00;
 	wrCMD();
 }
@@ -40,7 +42,7 @@ void line2(void)
 void writeMSG(char msg[])
 {
 	unsigned char i;
-	for(i = 0; i < 16 && msg[i] != '\0'; i++)
+	for (i = 0; i < 16 && msg[i] != '\0'; i++) //modificada para aceitar mensagens que sejam menores que 16
 	{
 		LCD = msg[i];
 		wrCHAR();
@@ -65,12 +67,14 @@ void wrCHAR(void)
 	delayT0(5);
 }
 
-void clearLCD(){
+void clearLCD()
+{
 	configLCD();
 	return;
 }
 
-void mensagemInicial(){
+void mensagemInicial()
+{
 	clearLCD();
 	line1();
 	writeMSG("Qual o intervalo");
@@ -79,13 +83,15 @@ void mensagemInicial(){
 	return;
 }
 
-void mensagemAguaInicial(){
+void mensagemAguaInicial()
+{
 	clearLCD();
 	line1();
 	writeMSG("Hora da agua!!!");
 }
 
-void mensagemAguaFinal(){
+void mensagemAguaFinal()
+{
 	clearLCD();
 	line1();
 	writeMSG("Tome sua agua!!!");

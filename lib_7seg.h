@@ -1,19 +1,18 @@
 //Dados relativos ao display de 7 segmentos
-//BCD
+//Pinos responsáveis pela codificação BCD
 #define bitA P1_0
 #define bitB P1_1
 #define bitC P1_2
 #define bitD P1_3
-//Multiplexa??o
+
+//Pinos responsáveis pela multiplexaco
 #define unidade P1_7
 #define dezena P1_6
 #define centena P1_5
 #define milhar P1_4
 
-void decodificaAlgorismo(int numero);
-void atualizaDisplays(int numero);
-
-
+void decodificaAlgorismo(int numero); //Transforma um número inteiro em código bcd
+void atualizaDisplays(int numero);	  //Atualiza os displays para o número passado como parâmetro
 
 void decodificaAlgorismo(int numero)
 {
@@ -80,8 +79,6 @@ void decodificaAlgorismo(int numero)
 		bitD = 1;
 		break;
 	}
-
-	return;
 }
 
 void atualizaDisplays(int numero)
@@ -109,6 +106,4 @@ void atualizaDisplays(int numero)
 	milhar = 0;
 	delayT0(10);
 	milhar = 1;
-
-	return;
 }
