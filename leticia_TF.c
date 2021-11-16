@@ -5,7 +5,7 @@
 #include <lib_lcd.h>
 #include <lib_ativaAgua.h>
 
-#define TEMPO_DE_FUNCIONAMENTO 100 //tempo que a bomba ficará ativada
+#define TEMPO_DE_FUNCIONAMENTO 3000 //tempo que a bomba ficará ativada
 
 //Configurações inicias
 void configuraAplicacao();
@@ -50,7 +50,7 @@ void main()
 
 void configuraAplicacao()
 {
-	//desligaAtuadores();
+	desligaAtuadores();
 	configLCD();
 	configInterrupcoes();
 	defineIntervalo();
@@ -92,8 +92,13 @@ void defineIntervalo()
 
 void ativaAgua(void)
 {
-	mensagemAguaInicial();
 	EA = 0; //desativa interrupções globais
+
+	//Um bipe acontece junto com a mensagem
+	ligaBuzzer();
+	mensagemAguaInicial();
+	desligaBuzzer();
+	
 	//desativa displays 7seg
 	unidade = 1;
 	dezena = 1;
@@ -106,8 +111,17 @@ void ativaAgua(void)
 	tempoRestante = valorResetaTimer;
 
 	//Ativa componentes
+	ligaBomba();
 	ligaLED(TEMPO_DE_FUNCIONAMENTO);
+	desligaBomba();
+	
+	
+	//som na mensagem final
+	ligaBuzzer();
 	mensagemAguaFinal();
+	desligaBuzzer();
+	
+	
 	inicia50msT1();
 	EA = 1; //ativa interrupcoes globais
 }
