@@ -3,7 +3,7 @@
 #include <lib_7seg.h>
 #include <lib_keypad.h>
 #include <lib_lcd.h>
-#include <lib_leds.h>
+#include <lib_ativaAgua.h>
 
 #define TEMPO_DE_FUNCIONAMENTO 100 //tempo que a bomba ficará ativada
 
@@ -33,7 +33,7 @@ void main()
 	while (1)
 	{
 		atualizaDisplays(tempoRestante);
-		if (flagAtivaAgua == 1)
+		if (flagAtivaAgua == 1 || tempoRestante == 0)
 		{ //condição para ativar agua
 			flagAtivaAgua = 0;
 			ativaAgua();
@@ -50,8 +50,7 @@ void main()
 
 void configuraAplicacao()
 {
-	enableAllLEDs = 0;
-	enableLEDs = 0;
+	//desligaAtuadores();
 	configLCD();
 	configInterrupcoes();
 	defineIntervalo();
@@ -135,7 +134,6 @@ void verificaSegundo() interrupt 3 //Interrupção de estouro do timer 1
 	{
 		tempoRestante--;   //diminui o valor de segundos exibido no display
 		qtdeDeMiliSeg = 0; //reseta a quantidade de milissegundos
-		flagAtivaAgua = 1; //liga a flag de ativação
 	}
 	inicia50msT1(); // inicia o timer novamente
 }

@@ -46,7 +46,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\Objects\</OutputDirectory>
-          <OutputName>trabalho 7</OutputName>
+          <OutputName>trabalhoFinalLeticia</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -233,7 +233,7 @@
               <RCB>
                 <Type>0</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x10000</Size>
+                <Size>0xffff</Size>
               </RCB>
               <RXB>
                 <Type>0</Type>
@@ -385,11 +385,6 @@
               <FileName>leticia_TF.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\leticia_TF.c</FilePath>
-            </File>
-            <File>
-              <FileName>definesIO.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\definesIO.h</FilePath>
             </File>
             <File>
               <FileName>lib_timers.h</FileName>

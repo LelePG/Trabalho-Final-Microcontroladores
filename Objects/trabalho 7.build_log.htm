@@ -25,13 +25,12 @@ Project File Date:  11/16/2021
 Rebuild target 'Target 1'
 assembling STARTUP.A51...
 compiling leticia_TF.c...
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?DESLIGAATUADORES?LETICIA_TF
-Program Size: data=23.2 xdata=0 code=1836
-creating hex file from ".\Objects\trabalhoFinalLeticia"...
-".\Objects\trabalhoFinalLeticia" - 0 Error(s), 1 Warning(s).
-Build Time Elapsed:  00:00:01
+lib_timers.h(33): warning C206: 'delay1ms': missing function-prototype
+leticia_TF.c(6): warning C318: can't open file 'lib_leds.h'
+leticia_TF.c(53): error C202: 'enableAllLEDs': undefined identifier
+leticia_TF.c(54): error C202: 'enableLEDs': undefined identifier
+Target not created.
+Build Time Elapsed:  00:00:00
 </pre>
 </body>
 </html>

@@ -30,7 +30,7 @@ void delayT0(int x)
 	int i;
 	for (i = 0; i < x; i++)
 	{
-		delay1ms(); // chama o delay de 1 ms x vezes, gerando um delay de xms
+		delay1msT0(); // chama o delay de 1 ms x vezes, gerando um delay de xms
 	}
 	return;
 }
