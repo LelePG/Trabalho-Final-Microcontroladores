@@ -47,12 +47,14 @@ void ligaBuzzer(){
 void desligaBuzzer(){
 	buzzer = 0;
 }
+
+
 void ligaBomba(){
 	bomba = 1;
 }
 
 void desligaBomba(){
-	buzzer = 0;
+	bomba = 0;
 }
 
 

@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    11/16/2021  01:59:33  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    11/16/2021  02:08:47  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
@@ -59,7 +59,7 @@ LINK MAP OF MODULE:  .\Objects\trabalhoFinalLeticia (?C_STARTUP)
             CODE    0D9FH     002FH     UNIT         ?PR?_WRITEMSG?LETICIA_TF
             CODE    0DCEH     0028H     UNIT         ?PR?MAIN?LETICIA_TF
             CODE    0DF6H     0027H     UNIT         ?PR?VERIFICASEGUNDO?LETICIA_TF
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2021  01:59:33  PAGE 2
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2021  02:08:47  PAGE 2
 
 
             CODE    0E1DH     001FH     UNIT         ?PR?_DELAYT0?LETICIA_TF
@@ -119,7 +119,7 @@ SEGMENT                                           DATA_GROUP
   +--> ?PR?WRCMD?LETICIA_TF
 
 ?PR?WRCMD?LETICIA_TF                            -----    -----
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2021  01:59:33  PAGE 3
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2021  02:08:47  PAGE 3
 
 
   +--> ?PR?_DELAYT0?LETICIA_TF
@@ -179,7 +179,7 @@ SEGMENT                                           DATA_GROUP
 ?PR?MENSAGEMAGUAINICIAL?LETICIA_TF              -----    -----
   +--> ?PR?CLEARLCD?LETICIA_TF
   +--> ?PR?LINE1?LETICIA_TF
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2021  01:59:33  PAGE 4
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2021  02:08:47  PAGE 4
 
 
   +--> ?CO?LETICIA_TF
@@ -239,7 +239,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\trabalhoFinalLeticia (?C_STARTUP)
   C:0A9FH         LINE#         134
   C:0AA0H         LINE#         135
   C:0AA1H         LINE#         136
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2021  01:59:33  PAGE 5
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2021  02:08:47  PAGE 5
 
 
   C:0AA3H         LINE#         185
@@ -299,7 +299,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\trabalhoFinalLeticia (?C_STARTUP)
   C:0F45H         PUBLIC        desligaBomba
   C:0EF5H         PUBLIC        configuraAplicacao
   B:00A8H.3       PUBLIC        ET1
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2021  01:59:33  PAGE 6
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2021  02:08:47  PAGE 6
 
 
   B:0088H.5       PUBLIC        TF0
@@ -359,7 +359,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\trabalhoFinalLeticia (?C_STARTUP)
   C:0EEFH         LINE#         50
   C:0EF2H         LINE#         51
   C:0EF4H         LINE#         54
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2021  01:59:33  PAGE 7
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2021  02:08:47  PAGE 7
 
 
   -------         ENDPROC       INICIA50MST1
@@ -419,7 +419,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\trabalhoFinalLeticia (?C_STARTUP)
   C:0B8CH         LINE#         55
   C:0B8CH         LINE#         56
   C:0B8EH         LINE#         57
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2021  01:59:33  PAGE 8
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2021  02:08:47  PAGE 8
 
 
   C:0B8EH         LINE#         58
@@ -479,7 +479,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\trabalhoFinalLeticia (?C_STARTUP)
   C:0E42H         LINE#         13
   C:0E42H         LINE#         14
   C:0E42H         LINE#         15
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2021  01:59:33  PAGE 9
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2021  02:08:47  PAGE 9
 
 
   C:0E45H         LINE#         16
@@ -539,7 +539,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\trabalhoFinalLeticia (?C_STARTUP)
   C:0C1FH         LINE#         73
   C:0C1FH         LINE#         74
   C:0C20H         LINE#         75
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2021  01:59:33  PAGE 10
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2021  02:08:47  PAGE 10
 
 
   C:0C20H         LINE#         77
@@ -599,7 +599,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\trabalhoFinalLeticia (?C_STARTUP)
   C:0ECCH         LINE#         64
   C:0ECEH         LINE#         65
   C:0ED5H         LINE#         66
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2021  01:59:33  PAGE 11
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2021  02:08:47  PAGE 11
 
 
   C:0ED7H         LINE#         67
@@ -659,7 +659,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\trabalhoFinalLeticia (?C_STARTUP)
   C:0CE1H         LINE#         39
   C:0CE3H         LINE#         40
   C:0CE5H         LINE#         41
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2021  01:59:33  PAGE 12
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2021  02:08:47  PAGE 12
 
 
   -------         ENDPROC       _LIGALED
@@ -674,14 +674,14 @@ SYMBOL TABLE OF MODULE:  .\Objects\trabalhoFinalLeticia (?C_STARTUP)
   C:0F41H         LINE#         49
   -------         ENDPROC       DESLIGABUZZER
   -------         PROC          LIGABOMBA
-  C:0F42H         LINE#         50
-  C:0F42H         LINE#         51
-  C:0F44H         LINE#         52
+  C:0F42H         LINE#         52
+  C:0F42H         LINE#         53
+  C:0F44H         LINE#         54
   -------         ENDPROC       LIGABOMBA
   -------         PROC          DESLIGABOMBA
-  C:0F45H         LINE#         54
-  C:0F45H         LINE#         55
-  C:0F47H         LINE#         56
+  C:0F45H         LINE#         56
+  C:0F45H         LINE#         57
+  C:0F47H         LINE#         58
   -------         ENDPROC       DESLIGABOMBA
   -------         PROC          MAIN
   C:0DCEH         LINE#         30
@@ -719,7 +719,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\trabalhoFinalLeticia (?C_STARTUP)
   C:0F0EH         LINE#         62
   C:0F10H         LINE#         63
   C:0F12H         LINE#         64
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2021  01:59:33  PAGE 13
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2021  02:08:47  PAGE 13
 
 
   C:0F14H         LINE#         65
@@ -779,7 +779,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\trabalhoFinalLeticia (?C_STARTUP)
   C:0F33H         LINE#         133
   -------         ENDPROC       DEFINEINTERVALOINTERRUPT
   -------         PROC          ATIVAAGUAINTERRUPT
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2021  01:59:33  PAGE 14
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2021  02:08:47  PAGE 14
 
 
   C:0F34H         LINE#         135
@@ -839,7 +839,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\trabalhoFinalLeticia (?C_STARTUP)
 * RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0436H BYTE (52%) *
 ******************************************************************************
 
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2021  01:59:33  PAGE 15
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/16/2021  02:08:47  PAGE 15
 
 
 Program Size: data=23.2 xdata=0 code=1876
