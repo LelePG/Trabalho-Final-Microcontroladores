@@ -32,7 +32,7 @@ int identificaCaractere()
 	int valorLido;
 	while (1)
 	{
-		int delayTempo = 35; //tempo encontrado com base em testes
+		int delayTempo = 40; //tempo encontrado com base em testes
 
 		linhaA = 0;
 		linhaB = 0;

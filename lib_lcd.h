@@ -14,6 +14,7 @@ void clearLCD();			//limpa o LCD
 void mensagemInicial();		//imprime a mensagem inicial da aplicação (utilizada para definir o intervalo)
 void mensagemAguaInicial(); //imprime mensagem de início de dispenser da água
 void mensagemAguaFinal();	//imprime mensagem de fim de dispenser da água
+void turnOnLCD();
 
 void configLCD(void)
 {
@@ -21,10 +22,8 @@ void configLCD(void)
 	wrCMD();
 	LCD = 0x06;
 	wrCMD();
-	LCD = 0x0E;
-	wrCMD();
-	LCD = 0x01;
-	wrCMD();
+	turnOnLCD();
+	clearLCD();
 }
 
 void line1(void)
@@ -69,7 +68,8 @@ void wrCHAR(void)
 
 void clearLCD()
 {
-	configLCD();
+	LCD = 0x01;
+	wrCMD();
 	return;
 }
 
@@ -81,6 +81,11 @@ void mensagemInicial()
 	line2();
 	writeMSG("para tomar agua?");
 	return;
+}
+
+void turnOnLCD(){
+	LCD = 0x0C;
+	wrCMD();
 }
 
 void mensagemAguaInicial()
@@ -95,6 +100,6 @@ void mensagemAguaFinal()
 	clearLCD();
 	line1();
 	writeMSG("Tome sua agua!!!");
-	delayT0(2000);
+	delayT0(1500);
 	clearLCD();
 }

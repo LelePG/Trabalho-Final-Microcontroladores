@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   LETICIA_TF                                                        11/16/2021 02:08:46 PAGE 1   
+C51 COMPILER V9.60.0.0   LETICIA_TF                                                        11/16/2021 02:39:13 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE LETICIA_TF
@@ -15,7 +15,7 @@ line level    source
    5          #include <lib_lcd.h>
    6          #include <lib_ativaAgua.h>
    7          
-   8          #define TEMPO_DE_FUNCIONAMENTO 3000 //tempo que a bomba ficará ativada
+   8          #define TEMPO_DE_FUNCIONAMENTO 1500 //tempo que a bomba ficará ativada
    9          
   10          //Configurações inicias
   11          void configuraAplicacao();
@@ -62,7 +62,7 @@ line level    source
   52          {
   53   1        desligaAtuadores();
   54   1        configLCD();
-C51 COMPILER V9.60.0.0   LETICIA_TF                                                        11/16/2021 02:08:46 PAGE 2   
+C51 COMPILER V9.60.0.0   LETICIA_TF                                                        11/16/2021 02:39:13 PAGE 2   
 
   55   1        configInterrupcoes();
   56   1        defineIntervalo();
@@ -96,80 +96,82 @@ line level    source
              -mais
   84   1        { 
   85   2          valorResetaTimer = 5;
-  86   2        }
-  87   1      
-  88   1        clearLCD();
-  89   1        tempoRestante = valorResetaTimer; //reinicia a contagem regressiva
-  90   1        inicia50msT1();           //liga o contador de segundos novamente
-  91   1      }
-  92          
-  93          void ativaAgua(void)
-  94          {
-  95   1        EA = 0; //desativa interrupções globais
-  96   1      
-  97   1        //Um bipe acontece junto com a mensagem
-  98   1        ligaBuzzer();
-  99   1        mensagemAguaInicial();
- 100   1        desligaBuzzer();
- 101   1        
- 102   1        //desativa displays 7seg
- 103   1        unidade = 1;
- 104   1        dezena = 1;
- 105   1        centena = 1;
- 106   1        milhar = 1;
- 107   1        desativaT1(); //desliga timer
- 108   1      
- 109   1        //reseta variáveis globais
- 110   1        qtdeDeMiliSeg = 0;
- 111   1        tempoRestante = valorResetaTimer;
- 112   1      
- 113   1        //Ativa componentes
- 114   1        ligaBomba();
- 115   1        ligaLED(TEMPO_DE_FUNCIONAMENTO);
-C51 COMPILER V9.60.0.0   LETICIA_TF                                                        11/16/2021 02:08:46 PAGE 3   
+  86   2        } else if (valorResetaTimer > 9999){
+  87   2          valorResetaTimer = 9999;
+  88   2        }
+  89   1      
+  90   1        clearLCD();
+  91   1        tempoRestante = valorResetaTimer; //reinicia a contagem regressiva
+  92   1        inicia50msT1();           //liga o contador de segundos novamente
+  93   1      }
+  94          
+  95          void ativaAgua(void)
+  96          {
+  97   1        EA = 0; //desativa interrupções globais
+  98   1      
+  99   1        //Um bipe acontece junto com a mensagem
+ 100   1        ligaBuzzer();
+ 101   1        mensagemAguaInicial();
+ 102   1        desligaBuzzer();
+ 103   1        
+ 104   1        //desativa displays 7seg
+ 105   1        unidade = 1;
+ 106   1        dezena = 1;
+ 107   1        centena = 1;
+ 108   1        milhar = 1;
+ 109   1        desativaT1(); //desliga timer
+ 110   1      
+ 111   1        //reseta variáveis globais
+ 112   1        qtdeDeMiliSeg = 0;
+ 113   1        tempoRestante = valorResetaTimer;
+ 114   1      
+ 115   1        //Ativa componentes
+C51 COMPILER V9.60.0.0   LETICIA_TF                                                        11/16/2021 02:39:13 PAGE 3   
 
- 116   1        desligaBomba();
- 117   1        
- 118   1        
- 119   1        //som na mensagem final
- 120   1        ligaBuzzer();
- 121   1        mensagemAguaFinal();
- 122   1        desligaBuzzer();
- 123   1        
- 124   1        
- 125   1        inicia50msT1();
- 126   1        EA = 1; //ativa interrupcoes globais
- 127   1      }
- 128          
- 129          void defineIntervaloInterrupt() interrupt 0 //Interrupção externa 0
- 130          {
- 131   1        flagDefineIntervalo = 1;
- 132   1        EX0 = 0;
- 133   1      }
- 134          
- 135          void ativaAguaInterrupt() interrupt 2 //Interrupção externa 1
- 136          {
- 137   1        flagAtivaAgua = 1;
- 138   1        EX1 = 0;
- 139   1      }
- 140          
- 141          void verificaSegundo() interrupt 3 //Interrupção de estouro do timer 1
- 142          {
- 143   1        //Verifica se um segundo passou, levando em considera��o que para que isso aconte�a
- 144   1        //a fun��o espera 50ms precisa ser executada 200 vezes.
- 145   1        desativaT1();       //desliga o timer
- 146   1        qtdeDeMiliSeg++;      //mais milissegundos se passaram
- 147   1        if (qtdeDeMiliSeg == 200) // um segundo passou
- 148   1        {
- 149   2          tempoRestante--;   //diminui o valor de segundos exibido no display
- 150   2          qtdeDeMiliSeg = 0; //reseta a quantidade de milissegundos
- 151   2        }
- 152   1        inicia50msT1(); // inicia o timer novamente
- 153   1      }
+ 116   1        ligaBomba();
+ 117   1        ligaLED(TEMPO_DE_FUNCIONAMENTO);
+ 118   1        desligaBomba();
+ 119   1        
+ 120   1        
+ 121   1        //som na mensagem final
+ 122   1        ligaBuzzer();
+ 123   1        mensagemAguaFinal();
+ 124   1        desligaBuzzer();
+ 125   1        
+ 126   1        
+ 127   1        inicia50msT1();
+ 128   1        EA = 1; //ativa interrupcoes globais
+ 129   1      }
+ 130          
+ 131          void defineIntervaloInterrupt() interrupt 0 //Interrupção externa 0
+ 132          {
+ 133   1        flagDefineIntervalo = 1;
+ 134   1        EX0 = 0;
+ 135   1      }
+ 136          
+ 137          void ativaAguaInterrupt() interrupt 2 //Interrupção externa 1
+ 138          {
+ 139   1        flagAtivaAgua = 1;
+ 140   1        EX1 = 0;
+ 141   1      }
+ 142          
+ 143          void verificaSegundo() interrupt 3 //Interrupção de estouro do timer 1
+ 144          {
+ 145   1        //Verifica se um segundo passou, levando em considera��o que para que isso aconte�a
+ 146   1        //a fun��o espera 50ms precisa ser executada 200 vezes.
+ 147   1        desativaT1();       //desliga o timer
+ 148   1        qtdeDeMiliSeg++;      //mais milissegundos se passaram
+ 149   1        if (qtdeDeMiliSeg == 200) // um segundo passou
+ 150   1        {
+ 151   2          tempoRestante--;   //diminui o valor de segundos exibido no display
+ 152   2          qtdeDeMiliSeg = 0; //reseta a quantidade de milissegundos
+ 153   2        }
+ 154   1        inicia50msT1(); // inicia o timer novamente
+ 155   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    979    ----
+   CODE SIZE        =   1000    ----
    CONSTANT SIZE    =     67    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----

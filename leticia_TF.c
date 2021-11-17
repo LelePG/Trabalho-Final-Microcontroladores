@@ -5,7 +5,7 @@
 #include <lib_lcd.h>
 #include <lib_ativaAgua.h>
 
-#define TEMPO_DE_FUNCIONAMENTO 3000 //tempo que a bomba ficará ativada
+#define TEMPO_DE_FUNCIONAMENTO 1500 //tempo que a bomba ficará ativada
 
 //Configurações inicias
 void configuraAplicacao();
@@ -83,6 +83,8 @@ void defineIntervalo()
 	if (valorResetaTimer < 5) //verificação de seguranca caso o usuário tenha digitado um número baixo demais
 	{ 
 		valorResetaTimer = 5;
+	} else if (valorResetaTimer > 9999){
+		valorResetaTimer = 9999;
 	}
 
 	clearLCD();
