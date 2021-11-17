@@ -5,7 +5,7 @@
 #include <lib_lcd.h>
 #include <lib_ativaAgua.h>
 
-#define TEMPO_DE_FUNCIONAMENTO 1500 //tempo que a bomba ficará ativada
+#define TEMPO_DE_FUNCIONAMENTO 2000 //tempo que a bomba ficará ativada
 
 //Configurações inicias
 void configuraAplicacao();
